@@ -1,5 +1,5 @@
 import type { PageServerLoad } from './$types'
-import { type CompanyProfile, getCompanyProfile } from '@phoobynet/fmp-client'
+import { type CompanyProfile, getCompanyProfile, getCompanyPeers } from '@phoobynet/fmp-client'
 import { error } from '@sveltejs/kit'
 
 export const load = (async ({ params }) => {
@@ -11,7 +11,10 @@ export const load = (async ({ params }) => {
 		})
 	}
 
+	const companyPeers = await getCompanyPeers(params.symbol)
+
 	return {
 		companyProfile: companyProfiles[0] as CompanyProfile,
+		companyPeers: companyPeers,
 	}
 }) as PageServerLoad
